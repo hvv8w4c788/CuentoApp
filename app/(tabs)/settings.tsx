@@ -84,7 +84,7 @@ export default function SettingsScreen() {
                           { color: state.fontSize === size ? Colors.amber : subColor },
                         ]}
                       >
-                        {size === 'small' ? 'A' : size === 'medium' ? 'A' : 'A'}
+                        {size === 'small' ? 'A' : size === 'medium' ? 'AA' : 'AAA'}
                       </Text>
                     </Pressable>
                   ))}

@@ -262,7 +262,7 @@ export const storyB2_3: Story = {
       ],
       choices: [
         { text: 'Documentar todo el proceso para publicarlo', hint: 'Legar', next: 'c10g' },
-        { text: 'Tomarte un mes de descanso antes del siguiente proyecto', hint: 'Cuidarse', next: 'c10n' },
+        { text: 'Tomarte un mes de descanso antes del siguiente proyecto', hint: 'Cuidarse', next: 'c10b' },
       ],
       quiz: { q: '¿Con cuánto sobrecoste terminan las obras?', opts: ['4%', '6%', '8%', '12%'], a: 2 },
     },

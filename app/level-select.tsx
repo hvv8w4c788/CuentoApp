@@ -62,7 +62,7 @@ export default function LevelSelect() {
 
         <Pressable
           style={[styles.cta, !selected && styles.ctaDisabled]}
-          onPress={() => selected && router.push('/goals')}
+          onPress={() => selected && router.push(`/goals?level=${selected}`)}
           disabled={!selected}
         >
           <Text style={styles.ctaText}>Continuar →</Text>

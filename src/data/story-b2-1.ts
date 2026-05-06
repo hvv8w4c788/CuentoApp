@@ -89,7 +89,7 @@ export const storyB2_1: Story = {
     c9b: { id: 'c9b', num: 9, title: 'La presión final',
       text: 'Una semana antes del veredicto, alguien hackea tu ordenador y filtra correos privados.\n\nLos medios afines al ministro los publican fuera de contexto.\n\nTu directora dice: "Tienes que dar la cara en público. Ahora."\n\nEsa noche no duermes.',
       vocab: [{ w: 'hackear', d: 'to hack' }, { w: 'fuera de contexto', d: 'out of context' }, { w: 'afín', d: 'aligned with' }, { w: 'el veredicto', d: 'the verdict' }],
-      choices: [{ text: 'Dar una rueda de prensa y responder a todo', hint: 'Transparencia', next: 'c10g' }, { text: 'Ignorar el ruido y dejar que los hechos hablen', hint: 'Disciplina', next: 'c10n' }],
+      choices: [{ text: 'Dar una rueda de prensa y responder a todo', hint: 'Transparencia', next: 'c10g' }, { text: 'Ignorar el ruido y dejar que los hechos hablen', hint: 'Disciplina', next: 'c10b' }],
       quiz: { q: '¿Qué hacen con los correos privados hackeados?', opts: ['Los destruyen', 'Los entregan a la policía', 'Los publican fuera de contexto', 'Los devuelven'], a: 2 } },
     c10g: { id: 'c10g', num: 10, title: 'El precio de la verdad', ending: 'good',
       text: 'El ministro es condenado a ocho años de prisión por corrupción y malversación de fondos públicos.\n\nTú ganas el Premio Nacional de Periodismo.\n\nEscarlata es reintegrada en su puesto con compensación económica.\n\nPublicas el libro "El precio de la verdad". Es un bestseller.\n\nAlgún día te preguntarás si valió la pena. Siempre respondes que sí.',

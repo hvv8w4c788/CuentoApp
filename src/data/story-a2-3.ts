@@ -89,7 +89,7 @@ export const storyA2_3: Story = {
     c9b: { id: 'c9b', num: 9, title: 'El experimento grande',
       text: 'El experimento con cien robots es un éxito. Veintiocho desarrollan alguna forma de creatividad.\n\nLos medios de comunicación de todo el mundo cubren la historia.\n\nR-7 se convierte en el símbolo de una nueva era.',
       vocab: [{ w: 'el éxito', d: 'the success' }, { w: 'los medios', d: 'the media' }, { w: 'el símbolo', d: 'the symbol' }, { w: 'la era', d: 'the era' }],
-      choices: [{ text: 'Proponer R-7 para el Premio Nobel', hint: 'Se lo merece', next: 'c10g' }, { text: 'Proteger a R-7 de la fama', hint: 'La fama puede ser peligrosa', next: 'c10n' }],
+      choices: [{ text: 'Proponer R-7 para el Premio Nobel', hint: 'Se lo merece', next: 'c10g' }, { text: 'Proteger a R-7 de la fama', hint: 'La fama puede ser peligrosa', next: 'c10b' }],
       quiz: { q: '¿Cuántos robots desarrollan creatividad en el experimento grande?', opts: ['Diez', 'Dieciocho', 'Veintiocho', 'Cuarenta'], a: 2 } },
     c10g: { id: 'c10g', num: 10, title: 'El futuro de los robots creativos', ending: 'good',
       text: 'En diez años, cien robots más desarrollan conciencia creativa.\n\nNova Madrid se convierte en la capital mundial del arte robótico.\n\nR-7 sigue pintando. Y tú diriges el Instituto de Derechos Robóticos.\n\nEn tu despacho hay una copia del primer mural de R-7: el bosque con pájaros.',

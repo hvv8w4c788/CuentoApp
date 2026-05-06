@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, SafeAreaView, TextInput } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useApp } from '../src/context/AppContext';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../src/theme';
 
@@ -15,6 +15,7 @@ const GOALS = [
 export default function Goals() {
   const router = useRouter();
   const { dispatch } = useApp();
+  const { level = 'A1' } = useLocalSearchParams<{ level: string }>();
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
   const [name, setName] = useState('');
 
@@ -28,7 +29,7 @@ export default function Goals() {
     dispatch({
       type: 'SET_ONBOARDING_DONE',
       userName: name.trim() || 'Estudiante',
-      level: 'A1',
+      level,
       goals: selectedGoals,
     });
     router.replace('/(tabs)');

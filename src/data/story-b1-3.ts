@@ -89,7 +89,7 @@ export const storyB1_3: Story = {
     c9b: { id: 'c9b', num: 9, title: 'El proceso legal',
       text: 'El juicio contra Rodrigo dura dos meses.\n\nTú declaras como testigo. Es la primera vez que entras en un juzgado.\n\nTus palabras son claras y ordenadas. El juez te felicita por tu memoria de los hechos.',
       vocab: [{ w: 'el juicio', d: 'the trial' }, { w: 'declarar', d: 'to testify' }, { w: 'el juzgado', d: 'the court' }, { w: 'el juez', d: 'the judge' }],
-      choices: [{ text: 'Pensar en estudiar derecho', hint: 'Inspirado', next: 'c10g' }, { text: 'Sentirte aliviado de que todo haya terminado', hint: 'Aliviado', next: 'c10n' }],
+      choices: [{ text: 'Pensar en estudiar derecho', hint: 'Inspirado', next: 'c10g' }, { text: 'Sentirte aliviado de que todo haya terminado', hint: 'Aliviado', next: 'c10b' }],
       quiz: { q: '¿Cuánto dura el juicio contra Rodrigo?', opts: ['Dos semanas', 'Un mes', 'Dos meses', 'Seis meses'], a: 2 } },
     c10g: { id: 'c10g', num: 10, title: 'El detective del edificio', ending: 'good',
       text: 'Rodrigo es condenado por extorsión y amenazas.\n\nInés puede quedarse en su piso. Una semana después, bajo tu puerta aparece un sobre.\n\nDentro hay una foto del gato Canela y una nota: "Para el mejor vecino del mundo. Con gratitud eterna, Inés."\n\nEmpiezas a pensar en estudiar derecho. O criminología. Algo así.',

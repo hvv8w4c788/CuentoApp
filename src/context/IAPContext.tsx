@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
   purchaseUpdatedListener,
   purchaseErrorListener,
@@ -28,8 +28,21 @@ export function IAPProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let purchaseListener: ReturnType<typeof purchaseUpdatedListener>;
-    let errorListener: ReturnType<typeof purchaseErrorListener>;
+    // Register listeners before any async calls so no purchase events are missed
+    const purchaseListener = purchaseUpdatedListener(async (purchase: ProductPurchase) => {
+      if (SKUS.includes(purchase.productId)) {
+        await IAPService.finish(purchase);
+        dispatch({ type: 'SET_PRO', value: true });
+      }
+      setPurchasing(false);
+    });
+
+    const errorListener = purchaseErrorListener((err: PurchaseError) => {
+      if (err.code !== 'E_USER_CANCELLED') {
+        setError(err.message ?? 'Error al procesar el pago');
+      }
+      setPurchasing(false);
+    });
 
     const setup = async () => {
       const hasPro = await IAPService.init();
@@ -38,28 +51,13 @@ export function IAPProvider({ children }: { children: React.ReactNode }) {
       const subs = await IAPService.getProducts();
       setProducts(subs);
       setLoading(false);
-
-      purchaseListener = purchaseUpdatedListener(async (purchase: ProductPurchase) => {
-        if (SKUS.includes(purchase.productId)) {
-          await IAPService.finish(purchase);
-          dispatch({ type: 'SET_PRO', value: true });
-        }
-        setPurchasing(false);
-      });
-
-      errorListener = purchaseErrorListener((err: PurchaseError) => {
-        if (err.code !== 'E_USER_CANCELLED') {
-          setError(err.message ?? 'Error al procesar el pago');
-        }
-        setPurchasing(false);
-      });
     };
 
     setup();
 
     return () => {
-      purchaseListener?.remove();
-      errorListener?.remove();
+      purchaseListener.remove();
+      errorListener.remove();
       IAPService.close();
     };
   }, []);
