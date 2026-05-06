@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "Cuento",
+    "slug": "cuento-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a3020"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cuento.app",
+      "usesAppleSignIn": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#1a3020"
+      },
+      "package": "com.cuento.app"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#1a3020"
+        }
+      ]
+    ],
+    "scheme": "cuento",
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
