@@ -5,6 +5,7 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useApp } from '../../../src/context/AppContext';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../../../src/theme';
+import { loadStory } from '../../../src/utils/loadStory';
 import type { EndingType } from '../../../src/data/types';
 
 const ENDING_CONFIG: Record<EndingType, {
@@ -32,28 +33,6 @@ const ENDING_CONFIG: Record<EndingType, {
     icon: '🌧️',
   },
 };
-
-function loadStory(id: string) {
-  try {
-    switch (id) {
-      case 'a1-1': return require('../../../src/data/story-a1-1').storyA1_1;
-      case 'a1-2': return require('../../../src/data/story-a1-2').storyA1_2;
-      case 'a1-3': return require('../../../src/data/story-a1-3').storyA1_3;
-      case 'a2-1': return require('../../../src/data/story-a2-1').storyA2_1;
-      case 'a2-2': return require('../../../src/data/story-a2-2').storyA2_2;
-      case 'a2-3': return require('../../../src/data/story-a2-3').storyA2_3;
-      case 'b1-1': return require('../../../src/data/story-b1-1').storyB1_1;
-      case 'b1-2': return require('../../../src/data/story-b1-2').storyB1_2;
-      case 'b1-3': return require('../../../src/data/story-b1-3').storyB1_3;
-      case 'b2-1': return require('../../../src/data/story-b2-1').storyB2_1;
-      case 'b2-2': return require('../../../src/data/story-b2-2').storyB2_2;
-      case 'b2-3': return require('../../../src/data/story-b2-3').storyB2_3;
-      default: return null;
-    }
-  } catch {
-    return null;
-  }
-}
 
 export default function EndingScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

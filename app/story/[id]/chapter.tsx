@@ -7,32 +7,11 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useApp } from '../../../src/context/AppContext';
 import { ProgressBar } from '../../../src/components/ProgressBar';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../../../src/theme';
-import type { Story, VocabEntry } from '../../../src/data/types';
+import { loadStory } from '../../../src/utils/loadStory';
+import type { VocabEntry } from '../../../src/data/types';
 
 const FONT_SIZE_MAP = { small: 15, medium: 17, large: 20 };
 const XP_PER_CHAPTER = 20;
-
-function loadStory(id: string): Story | null {
-  try {
-    switch (id) {
-      case 'a1-1': return require('../../../src/data/story-a1-1').storyA1_1;
-      case 'a1-2': return require('../../../src/data/story-a1-2').storyA1_2;
-      case 'a1-3': return require('../../../src/data/story-a1-3').storyA1_3;
-      case 'a2-1': return require('../../../src/data/story-a2-1').storyA2_1;
-      case 'a2-2': return require('../../../src/data/story-a2-2').storyA2_2;
-      case 'a2-3': return require('../../../src/data/story-a2-3').storyA2_3;
-      case 'b1-1': return require('../../../src/data/story-b1-1').storyB1_1;
-      case 'b1-2': return require('../../../src/data/story-b1-2').storyB1_2;
-      case 'b1-3': return require('../../../src/data/story-b1-3').storyB1_3;
-      case 'b2-1': return require('../../../src/data/story-b2-1').storyB2_1;
-      case 'b2-2': return require('../../../src/data/story-b2-2').storyB2_2;
-      case 'b2-3': return require('../../../src/data/story-b2-3').storyB2_3;
-      default: return null;
-    }
-  } catch {
-    return null;
-  }
-}
 
 export default function ChapterScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -84,11 +63,8 @@ export default function ChapterScreen() {
     );
   }
 
-  const totalChapters = Object.keys(story.chapters).filter(k => {
-    const ch = story.chapters[k];
-    return ch.num !== undefined;
-  }).length;
-  const progress = chapter.num / Math.max(totalChapters, 10);
+  const maxChapterNum = Math.max(...Object.values(story.chapters).map(ch => ch.num));
+  const progress = chapter.num / maxChapterNum;
 
   const fontSize = FONT_SIZE_MAP[state.fontSize] ?? 17;
   const bg = state.darkMode ? Colors.darkBg : Colors.parchment;

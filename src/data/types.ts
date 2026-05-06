@@ -56,7 +56,7 @@ export interface VocabEntry {
   example?: string;
   storyId: string;
   mastery: 'new' | 'learning' | 'known';
-  nextReview: string;
+  nextReview: string | null;
   interval: number;
 }
 

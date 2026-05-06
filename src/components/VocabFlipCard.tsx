@@ -67,13 +67,13 @@ export function VocabFlipCard({ entry, onRate, darkMode }: Props) {
             style={[styles.rateBtn, styles.hardBtn]}
             onPress={() => onRate(entry.word, 'hard')}
           >
-            <Text style={styles.rateBtnText}>😅 Difícil</Text>
+            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>😅 Difícil</Text>
           </Pressable>
           <Pressable
             style={[styles.rateBtn, styles.knownBtn]}
             onPress={() => onRate(entry.word, 'known')}
           >
-            <Text style={styles.rateBtnText}>✓ Lo sé</Text>
+            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>✓ Lo sé</Text>
           </Pressable>
         </View>
       )}
@@ -147,6 +147,5 @@ const styles = StyleSheet.create({
   rateBtnText: {
     fontFamily: Fonts.sansMedium,
     fontSize: FontSizes.md,
-    color: Colors.ink,
   },
 });
