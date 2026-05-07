@@ -95,7 +95,7 @@ export default function ChapterScreen() {
               {story.title}
             </Text>
             <Text style={[styles.chapterLabel, { color: subColor }]}>
-              Cap. {chapter.num}
+              Hfdst. {chapter.num}
             </Text>
           </View>
           <View style={styles.topRight} />
@@ -122,7 +122,7 @@ export default function ChapterScreen() {
           {/* Vocab panel */}
           {state.showVocab && chapter.vocab.length > 0 && (
             <View style={[styles.vocabPanel, { backgroundColor: cardBg }]}>
-              <Text style={[styles.vocabHeader, { color: subColor }]}>💡 Vocabulario</Text>
+              <Text style={[styles.vocabHeader, { color: subColor }]}>💡 Woordenschat</Text>
               {chapter.vocab.map(v => (
                 <Pressable
                   key={v.w}
@@ -141,7 +141,7 @@ export default function ChapterScreen() {
           {/* CTA */}
           <Pressable style={styles.cta} onPress={handleContinue}>
             <Text style={styles.ctaText}>
-              {chapter.choices.length > 0 ? 'Tomar una decisión →' : chapter.ending ? 'Ver final →' : 'Continuar →'}
+              {chapter.choices.length > 0 ? 'Maak een keuze →' : chapter.ending ? 'Zie einde →' : 'Doorgaan →'}
             </Text>
           </Pressable>
         </ScrollView>

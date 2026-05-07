@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Colors, Fonts, FontSizes, Spacing } from '../theme';
 import { getStreakDays } from '../hooks/useStreak';
 
-const DAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+const DAY_LABELS = ['M', 'D', 'W', 'D', 'V', 'Z', 'Z'];
 
 interface Props {
   activityLog: string[];
@@ -21,7 +21,7 @@ export function StreakCalendar({ activityLog, streak, darkMode }: Props) {
       <View style={styles.header}>
         <Text style={styles.flame}>🔥</Text>
         <Text style={[styles.streakNum, { color: Colors.amber }]}>{streak}</Text>
-        <Text style={[styles.streakLabel, { color: faintColor }]}>días seguidos</Text>
+        <Text style={[styles.streakLabel, { color: faintColor }]}>dagen op rij</Text>
       </View>
       <View style={styles.days}>
         {days.map((active, i) => {

@@ -16,9 +16,9 @@ function getAvatar(name: string): string {
 }
 
 const ENDING_LABELS: Record<string, { label: string; color: string; icon: string }> = {
-  good: { label: 'Buen final', color: Colors.good, icon: '⭐️' },
-  neutral: { label: 'Final neutro', color: Colors.neutral, icon: '🌙' },
-  bad: { label: 'Final difícil', color: Colors.bad, icon: '🌧️' },
+  good: { label: 'Goed einde', color: Colors.good, icon: '⭐️' },
+  neutral: { label: 'Neutraal einde', color: Colors.neutral, icon: '🌙' },
+  bad: { label: 'Moeilijk einde', color: Colors.bad, icon: '🌧️' },
 };
 
 export default function ProfileScreen() {
@@ -39,7 +39,7 @@ export default function ProfileScreen() {
           {/* Hero */}
           <View style={[styles.heroCard, { backgroundColor: Colors.forest }]}>
             <Text style={styles.avatar}>{getAvatar(state.userName)}</Text>
-            <Text style={styles.heroName}>{state.userName || 'Estudiante'}</Text>
+            <Text style={styles.heroName}>{state.userName || 'Student'}</Text>
             <View style={styles.heroRow}>
               <LevelBadge level={state.userLevel} size="md" />
               {state.isPro && (
@@ -50,7 +50,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.xpBar}>
               <View style={styles.xpLabels}>
-                <Text style={styles.xpLabel}>Nivel {levelNum}</Text>
+                <Text style={styles.xpLabel}>Niveau {levelNum}</Text>
                 <Text style={styles.xpLabel}>{xpInLevel} / {XP_PER_LEVEL} XP</Text>
               </View>
               <ProgressBar progress={xpInLevel / XP_PER_LEVEL} color={Colors.amber} height={8} backgroundColor="rgba(255,255,255,0.15)" />
@@ -60,9 +60,9 @@ export default function ProfileScreen() {
           {/* Stats */}
           <View style={styles.statsRow}>
             {[
-              { label: 'Historias', value: state.completedStories.length, icon: '📚' },
-              { label: 'Racha', value: streak, icon: '🔥' },
-              { label: 'Palabras', value: state.vocabDeck.length, icon: '📝' },
+              { label: 'Verhalen', value: state.completedStories.length, icon: '📚' },
+              { label: 'Reeks', value: streak, icon: '🔥' },
+              { label: 'Woorden', value: state.vocabDeck.length, icon: '📝' },
             ].map(s => (
               <View key={s.label} style={[styles.statCard, { backgroundColor: cardBg }, Shadows.sm]}>
                 <Text style={styles.statIcon}>{s.icon}</Text>
@@ -75,7 +75,7 @@ export default function ProfileScreen() {
           {/* Completed stories */}
           {state.completedStories.length > 0 && (
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: textColor }]}>Historias completadas</Text>
+              <Text style={[styles.sectionTitle, { color: textColor }]}>Voltooide verhalen</Text>
               <View style={styles.completedList}>
                 {state.completedStories.map((c, i) => {
                   const info = ENDING_LABELS[c.ending] ?? ENDING_LABELS.neutral;
@@ -87,7 +87,7 @@ export default function ProfileScreen() {
                       <View style={styles.completedInfo}>
                         <Text style={[styles.completedId, { color: textColor }]}>{c.storyId}</Text>
                         <Text style={[styles.completedSub, { color: subColor }]}>
-                          {info.label} · {c.xpEarned} XP · {c.wordsEncountered} palabras
+                          {info.label} · {c.xpEarned} XP · {c.wordsEncountered} woorden
                         </Text>
                       </View>
                     </View>

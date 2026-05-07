@@ -47,7 +47,7 @@ export default function ChoiceScreen() {
 
           <View style={styles.heroArea}>
             <Text style={styles.emoji}>{story.emoji}</Text>
-            <Text style={styles.headline}>¿Qué decides?</Text>
+            <Text style={styles.headline}>Wat kies jij?</Text>
             <Text style={styles.subhead}>{chapter.title}</Text>
           </View>
 

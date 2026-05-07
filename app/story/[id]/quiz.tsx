@@ -108,7 +108,7 @@ export default function QuizScreen() {
           </Pressable>
 
           <View style={styles.header}>
-            <Text style={[styles.heading, { color: textColor }]}>Quiz final</Text>
+            <Text style={[styles.heading, { color: textColor }]}>Eindquiz</Text>
             <Text style={[styles.counter, { color: subColor }]}>
               {currentQ + 1} / {questions.length}
             </Text>
@@ -144,7 +144,7 @@ export default function QuizScreen() {
               backgroundColor: isCorrect ? Colors.good + '22' : Colors.bad + '22',
             }]}>
               <Text style={[styles.feedbackText, { color: isCorrect ? Colors.good : Colors.bad }]}>
-                {isCorrect ? `¡Correcto! +${XP_PER_CORRECT} XP` : 'Incorrecto — ¡sigue practicando!'}
+                {isCorrect ? `Correct! +${XP_PER_CORRECT} XP` : 'Niet correct — blijf oefenen!'}
               </Text>
             </View>
           )}
@@ -156,12 +156,12 @@ export default function QuizScreen() {
                 onPress={handleConfirm}
                 disabled={selected === null}
               >
-                <Text style={styles.btnText}>Comprobar</Text>
+                <Text style={styles.btnText}>Controleren</Text>
               </Pressable>
             ) : (
               <Pressable style={styles.btn} onPress={handleNext}>
                 <Text style={styles.btnText}>
-                  {isLast ? 'Ver final →' : 'Siguiente →'}
+                  {isLast ? 'Zie einde →' : 'Volgende →'}
                 </Text>
               </Pressable>
             )}

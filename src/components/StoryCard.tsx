@@ -42,7 +42,7 @@ export function StoryCard({ story, free, isPro, progress, completed, comingSoon,
         )}
         {comingSoon && (
           <View style={styles.soonBadge}>
-            <Text style={styles.soonText}>Pronto</Text>
+            <Text style={styles.soonText}>Binnenkort</Text>
           </View>
         )}
         {completed && (

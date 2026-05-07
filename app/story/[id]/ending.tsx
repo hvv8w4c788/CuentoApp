@@ -14,22 +14,22 @@ const ENDING_CONFIG: Record<EndingType, {
   good: {
     bg: Colors.forest,
     accent: Colors.tealLight,
-    title: '¡Buen final!',
-    subtitle: 'Has tomado las mejores decisiones.',
+    title: 'Goed einde!',
+    subtitle: 'Je hebt de beste keuzes gemaakt.',
     icon: '⭐️',
   },
   neutral: {
     bg: '#1e1a3e',
     accent: '#a080e0',
-    title: 'Final neutro',
-    subtitle: 'Un resultado equilibrado. ¿Qué hubiera pasado si...?',
+    title: 'Neutraal einde',
+    subtitle: 'Een evenwichtig resultaat. Wat was er gebeurd als...?',
     icon: '🌙',
   },
   bad: {
     bg: '#2a0e0e',
     accent: Colors.bad,
-    title: 'Final difícil',
-    subtitle: 'Las cosas no salieron bien. Inténtalo de nuevo.',
+    title: 'Moeilijk einde',
+    subtitle: 'Het liep niet goed af. Probeer het opnieuw.',
     icon: '🌧️',
   },
 };
@@ -98,11 +98,11 @@ export default function EndingScreen() {
           <View style={styles.statsRow}>
             <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
               <Text style={[styles.statValue, { color: config.accent }]}>{chaptersRead}</Text>
-              <Text style={styles.statLabel}>Capítulos</Text>
+              <Text style={styles.statLabel}>Hoofdstukken</Text>
             </View>
             <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
               <Text style={[styles.statValue, { color: config.accent }]}>{wordsEncountered}</Text>
-              <Text style={styles.statLabel}>Palabras</Text>
+              <Text style={styles.statLabel}>Woorden</Text>
             </View>
             {!isPreQuiz && latestCompleted && (
               <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
@@ -116,7 +116,7 @@ export default function EndingScreen() {
           <View style={styles.actions}>
             {isPreQuiz ? (
               <Pressable style={[styles.btn, { backgroundColor: config.accent }]} onPress={handleQuiz}>
-                <Text style={[styles.btnText, { color: Colors.forest }]}>Hacer quiz →</Text>
+                <Text style={[styles.btnText, { color: Colors.forest }]}>Quiz doen →</Text>
               </Pressable>
             ) : (
               <>
@@ -125,11 +125,11 @@ export default function EndingScreen() {
                     style={[styles.btn, styles.btnSecondary, { borderColor: config.accent }]}
                     onPress={handleRetry}
                   >
-                    <Text style={[styles.btnText, { color: config.accent }]}>Leer otro final</Text>
+                    <Text style={[styles.btnText, { color: config.accent }]}>Ander einde lezen</Text>
                   </Pressable>
                 )}
                 <Pressable style={[styles.btn, { backgroundColor: config.accent }]} onPress={handleHome}>
-                  <Text style={[styles.btnText, { color: Colors.forest }]}>Nueva historia</Text>
+                  <Text style={[styles.btnText, { color: Colors.forest }]}>Nieuw verhaal</Text>
                 </Pressable>
               </>
             )}

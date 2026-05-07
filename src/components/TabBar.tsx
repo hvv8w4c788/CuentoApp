@@ -5,10 +5,10 @@ import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Colors, Fonts, FontSizes, Shadows } from '../theme';
 
 const TABS = [
-  { name: 'index', label: 'Inicio', icon: '📚' },
-  { name: 'vocab', label: 'Vocab', icon: '🃏' },
-  { name: 'profile', label: 'Perfil', icon: '⭐️' },
-  { name: 'settings', label: 'Ajustes', icon: '⚙️' },
+  { name: 'index', label: 'Verhalen', icon: '📚' },
+  { name: 'vocab', label: 'Woorden', icon: '🃏' },
+  { name: 'profile', label: 'Profiel', icon: '⭐️' },
+  { name: 'settings', label: 'Instellingen', icon: '⚙️' },
 ];
 
 interface Props extends BottomTabBarProps {
