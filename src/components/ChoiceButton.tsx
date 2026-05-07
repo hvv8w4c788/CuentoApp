@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../theme';
 import type { Choice } from '../data/types';
@@ -15,7 +15,9 @@ const ICONS = ['🌿', '⚡️', '🌊', '🔥'];
 
 export function ChoiceButton({ choice, index, onPress, accentColor = Colors.tealLight }: Props) {
   const handlePress = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    if (Platform.OS !== 'web') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    }
     onPress(choice);
   };
 

@@ -1,13 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import {
-  purchaseUpdatedListener,
-  purchaseErrorListener,
-  type ProductPurchase,
-  type PurchaseError,
-} from 'react-native-iap';
+import { Platform } from 'react-native';
+import type { ProductPurchase, PurchaseError, Subscription } from 'react-native-iap';
 import { IAPService, SKUS } from '../services/IAPService';
 import { useApp } from './AppContext';
-import type { Subscription } from 'react-native-iap';
+
+// IAP listeners are only available on native — lazy-load on web
+const iap = Platform.OS !== 'web' ? require('react-native-iap') : null;
 
 interface IAPContextValue {
   products: Subscription[];
@@ -28,8 +26,13 @@ export function IAPProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (Platform.OS === 'web') {
+      setLoading(false);
+      return;
+    }
+
     // Register listeners before any async calls so no purchase events are missed
-    const purchaseListener = purchaseUpdatedListener(async (purchase: ProductPurchase) => {
+    const purchaseListener = iap.purchaseUpdatedListener(async (purchase: ProductPurchase) => {
       if (SKUS.includes(purchase.productId)) {
         await IAPService.finish(purchase);
         dispatch({ type: 'SET_PRO', value: true });
@@ -37,7 +40,7 @@ export function IAPProvider({ children }: { children: React.ReactNode }) {
       setPurchasing(false);
     });
 
-    const errorListener = purchaseErrorListener((err: PurchaseError) => {
+    const errorListener = iap.purchaseErrorListener((err: PurchaseError) => {
       if (err.code !== 'E_USER_CANCELLED') {
         setError(err.message ?? 'Error al procesar el pago');
       }

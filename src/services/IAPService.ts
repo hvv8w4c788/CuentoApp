@@ -1,15 +1,10 @@
-import {
-  initConnection,
-  endConnection,
-  getSubscriptions,
-  requestSubscription,
-  getPurchaseHistory,
-  finishTransaction,
-  type ProductPurchase,
-  type SubscriptionPurchase,
-  type Subscription,
-} from 'react-native-iap';
 import { Platform } from 'react-native';
+import type { ProductPurchase, SubscriptionPurchase, Subscription } from 'react-native-iap';
+
+// IAP is not available on web — lazy-load native module only on mobile
+const iap = Platform.OS !== 'web'
+  ? require('react-native-iap')
+  : null;
 
 export const PRODUCT_IDS = {
   monthly: 'cuento_monthly',
@@ -20,47 +15,53 @@ export const SKUS = [PRODUCT_IDS.monthly, PRODUCT_IDS.annual];
 
 export class IAPService {
   static async init(): Promise<boolean> {
+    if (!iap) return false;
     try {
-      await initConnection();
-      const history = await getPurchaseHistory();
-      return history.some(p => SKUS.includes(p.productId));
+      await iap.initConnection();
+      const history = await iap.getPurchaseHistory();
+      return history.some((p: ProductPurchase) => SKUS.includes(p.productId));
     } catch {
       return false;
     }
   }
 
   static async getProducts(): Promise<Subscription[]> {
+    if (!iap) return [];
     try {
-      return await getSubscriptions({ skus: SKUS });
+      return await iap.getSubscriptions({ skus: SKUS });
     } catch {
       return [];
     }
   }
 
   static async purchase(productId: string): Promise<void> {
+    if (!iap) return;
     if (Platform.OS === 'android') {
-      await requestSubscription({ sku: productId, andDangerouslyFinishTransactionAutomaticallyIOS: false });
+      await iap.requestSubscription({ sku: productId, andDangerouslyFinishTransactionAutomaticallyIOS: false });
     } else {
-      await requestSubscription({ sku: productId });
+      await iap.requestSubscription({ sku: productId });
     }
   }
 
   static async finish(purchase: ProductPurchase | SubscriptionPurchase): Promise<void> {
-    await finishTransaction({ purchase, isConsumable: false });
+    if (!iap) return;
+    await iap.finishTransaction({ purchase, isConsumable: false });
   }
 
   static async restore(): Promise<boolean> {
+    if (!iap) return false;
     try {
-      const history = await getPurchaseHistory();
-      return history.some(p => SKUS.includes(p.productId));
+      const history = await iap.getPurchaseHistory();
+      return history.some((p: ProductPurchase) => SKUS.includes(p.productId));
     } catch {
       return false;
     }
   }
 
   static async close(): Promise<void> {
+    if (!iap) return;
     try {
-      await endConnection();
+      await iap.endConnection();
     } catch {}
   }
 }
