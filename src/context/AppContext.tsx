@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { VocabEntry, CompletedStory, FontSize, EndingType } from '../data/types';
 import { todayISO } from '../hooks/useStreak';
 
-const STORAGE_KEY = 'cuento_state_v1';
+const STORAGE_KEY = 'verhaal_state_v1';
 
 export interface AppState {
   isLoaded: boolean;

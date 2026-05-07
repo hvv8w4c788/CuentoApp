@@ -7,8 +7,8 @@ const iap = Platform.OS !== 'web'
   : null;
 
 export const PRODUCT_IDS = {
-  monthly: 'cuento_monthly',
-  annual: 'cuento_annual',
+  monthly: 'verhaal_monthly',
+  annual: 'verhaal_annual',
 };
 
 export const SKUS = [PRODUCT_IDS.monthly, PRODUCT_IDS.annual];

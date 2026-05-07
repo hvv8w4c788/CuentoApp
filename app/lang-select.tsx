@@ -28,8 +28,8 @@ export default function LangSelect() {
     <View style={styles.bg}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
-          <Text style={styles.logo}>Cuento</Text>
-          <Text style={styles.tagline}>Learn languages by reading stories</Text>
+          <Text style={styles.logo}>Verhaal</Text>
+          <Text style={styles.tagline}>Learn Dutch by reading stories</Text>
         </View>
 
         <View style={styles.section}>

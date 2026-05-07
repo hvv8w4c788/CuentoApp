@@ -52,7 +52,7 @@ export default function Paywall() {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
           {/* Hero */}
           <Text style={styles.hero}>📚</Text>
-          <Text style={styles.title}>Cuento Pro</Text>
+          <Text style={styles.title}>Verhaal Pro</Text>
           <Text style={styles.subtitle}>Learn Dutch with unlimited stories</Text>
 
           {/* Features */}

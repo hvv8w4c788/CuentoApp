@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Cuento",
-    "slug": "cuento-app",
+    "name": "Verhaal",
+    "slug": "verhaal-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,7 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.cuento.app",
+      "bundleIdentifier": "com.verhaal.app",
       "usesAppleSignIn": false
     },
     "android": {
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#1a3020"
       },
-      "package": "com.cuento.app"
+      "package": "com.verhaal.app"
     },
     "plugins": [
       "expo-router",
@@ -34,7 +34,7 @@
         }
       ]
     ],
-    "scheme": "cuento",
+    "scheme": "verhaal",
     "web": {
       "bundler": "metro",
       "output": "single",

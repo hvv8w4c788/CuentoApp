@@ -21,16 +21,16 @@ export default function SettingsScreen() {
 
   const handleReset = () => {
     Alert.alert(
-      'Restablecer progreso',
-      '¿Seguro? Perderás todo tu progreso, XP y vocabulario.',
+      'Reset progress',
+      'Are you sure? You will lose all your progress, XP and vocabulary.',
       [
-        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Restablecer',
+          text: 'Reset',
           style: 'destructive',
           onPress: () => {
             dispatch({ type: 'RESET' });
-            router.replace('/lang-select');
+            router.replace('/level-select');
           },
         },
       ]
@@ -41,16 +41,16 @@ export default function SettingsScreen() {
     <View style={[styles.bg, { backgroundColor: bg }]}>
       <SafeAreaView style={styles.safe}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-          <Text style={[styles.pageTitle, { color: textColor }]}>Ajustes</Text>
+          <Text style={[styles.pageTitle, { color: textColor }]}>Settings</Text>
 
           {/* Appearance */}
           <View style={styles.section}>
-            <Text style={[styles.sectionLabel, { color: subColor }]}>APARIENCIA</Text>
+            <Text style={[styles.sectionLabel, { color: subColor }]}>APPEARANCE</Text>
             <View style={[styles.card, { backgroundColor: cardBg, borderColor }]}>
               <View style={styles.row}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>🌙</Text>
-                  <Text style={[styles.rowLabel, { color: textColor }]}>Modo oscuro</Text>
+                  <Text style={[styles.rowLabel, { color: textColor }]}>Dark mode</Text>
                 </View>
                 <Switch
                   value={state.darkMode}
@@ -65,7 +65,7 @@ export default function SettingsScreen() {
               <View style={styles.columnRow}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>Aa</Text>
-                  <Text style={[styles.rowLabel, { color: textColor }]}>Tamaño de texto</Text>
+                  <Text style={[styles.rowLabel, { color: textColor }]}>Text size</Text>
                 </View>
                 <View style={styles.fontSizeRow}>
                   {FONT_SIZES.map(size => (
@@ -95,12 +95,12 @@ export default function SettingsScreen() {
 
           {/* Learning */}
           <View style={styles.section}>
-            <Text style={[styles.sectionLabel, { color: subColor }]}>APRENDIZAJE</Text>
+            <Text style={[styles.sectionLabel, { color: subColor }]}>LEARNING</Text>
             <View style={[styles.card, { backgroundColor: cardBg, borderColor }]}>
               <View style={styles.row}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>📖</Text>
-                  <Text style={[styles.rowLabel, { color: textColor }]}>Mostrar vocabulario</Text>
+                  <Text style={[styles.rowLabel, { color: textColor }]}>Show vocabulary</Text>
                 </View>
                 <Switch
                   value={state.showVocab}
@@ -115,7 +115,7 @@ export default function SettingsScreen() {
               <Pressable style={styles.row} onPress={() => router.push('/level-select')}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>📊</Text>
-                  <Text style={[styles.rowLabel, { color: textColor }]}>Nivel CEFR</Text>
+                  <Text style={[styles.rowLabel, { color: textColor }]}>CEFR level</Text>
                 </View>
                 <View style={styles.rowRight}>
                   <Text style={[styles.rowValue, { color: subColor }]}>{state.userLevel}</Text>
@@ -127,14 +127,14 @@ export default function SettingsScreen() {
 
           {/* Account */}
           <View style={styles.section}>
-            <Text style={[styles.sectionLabel, { color: subColor }]}>CUENTA</Text>
+            <Text style={[styles.sectionLabel, { color: subColor }]}>ACCOUNT</Text>
             <View style={[styles.card, { backgroundColor: cardBg, borderColor }]}>
               {!state.isPro && (
                 <>
                   <Pressable style={styles.row} onPress={() => router.push('/paywall')}>
                     <View style={styles.rowLeft}>
                       <Text style={styles.rowIcon}>✨</Text>
-                      <Text style={[styles.rowLabel, { color: Colors.amber }]}>Actualizar a Pro</Text>
+                      <Text style={[styles.rowLabel, { color: Colors.amber }]}>Upgrade to Pro</Text>
                     </View>
                     <Text style={[styles.chevron, { color: subColor }]}>›</Text>
                   </Pressable>
@@ -147,10 +147,10 @@ export default function SettingsScreen() {
                   <View style={styles.row}>
                     <View style={styles.rowLeft}>
                       <Text style={styles.rowIcon}>✨</Text>
-                      <Text style={[styles.rowLabel, { color: textColor }]}>Cuento Pro</Text>
+                      <Text style={[styles.rowLabel, { color: textColor }]}>Verhaal Pro</Text>
                     </View>
                     <View style={styles.proBadge}>
-                      <Text style={styles.proBadgeText}>ACTIVO</Text>
+                      <Text style={styles.proBadgeText}>ACTIVE</Text>
                     </View>
                   </View>
                   <View style={[styles.divider, { backgroundColor: borderColor }]} />
@@ -160,7 +160,7 @@ export default function SettingsScreen() {
                   <Pressable style={styles.row} onPress={handleReset}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>🔄</Text>
-                  <Text style={[styles.rowLabel, { color: Colors.bad }]}>Restablecer progreso</Text>
+                  <Text style={[styles.rowLabel, { color: Colors.bad }]}>Reset progress</Text>
                 </View>
                 <Text style={[styles.chevron, { color: subColor }]}>›</Text>
               </Pressable>
@@ -169,12 +169,12 @@ export default function SettingsScreen() {
 
           {/* About */}
           <View style={styles.section}>
-            <Text style={[styles.sectionLabel, { color: subColor }]}>ACERCA DE</Text>
+            <Text style={[styles.sectionLabel, { color: subColor }]}>ABOUT</Text>
             <View style={[styles.card, { backgroundColor: cardBg, borderColor }]}>
               <View style={styles.row}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>📱</Text>
-                  <Text style={[styles.rowLabel, { color: textColor }]}>Versión</Text>
+                  <Text style={[styles.rowLabel, { color: textColor }]}>Version</Text>
                 </View>
                 <Text style={[styles.rowValue, { color: subColor }]}>1.0.0</Text>
               </View>
