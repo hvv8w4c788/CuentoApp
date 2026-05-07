@@ -41,12 +41,34 @@ export default function EndingScreen() {
 
   const story = useMemo(() => loadStory(id), [id]);
 
+  // Pre-quiz: story session still active (currentChapterId points to an ending chapter)
+  const activeEndingChapter = useMemo(() => {
+    if (!story || !state.currentChapterId) return null;
+    const ch = story.chapters[state.currentChapterId];
+    return ch?.ending ? ch : null;
+  }, [story, state.currentChapterId]);
+
+  // Post-quiz: COMPLETE_STORY has been dispatched
   const latestCompleted = useMemo(() => {
     return state.completedStories.filter(c => c.storyId === id).slice(-1)[0] ?? null;
   }, [state.completedStories, id]);
 
-  const endingType: EndingType = (latestCompleted?.ending as EndingType) ?? 'neutral';
+  const isPreQuiz = !!activeEndingChapter;
+
+  const endingType: EndingType = activeEndingChapter?.ending ?? latestCompleted?.ending ?? 'neutral';
   const config = ENDING_CONFIG[endingType] ?? ENDING_CONFIG.neutral;
+
+  // Stats: live when pre-quiz, from record when post-quiz
+  const chaptersRead = isPreQuiz
+    ? state.chapterPath.length
+    : (latestCompleted?.chaptersRead ?? 0);
+  const wordsEncountered = isPreQuiz
+    ? state.chapterPath.reduce((acc, cid) => acc + (story?.chapters[cid]?.vocab?.length ?? 0), 0)
+    : (latestCompleted?.wordsEncountered ?? 0);
+
+  const handleQuiz = () => {
+    router.push(`/story/${id}/quiz`);
+  };
 
   const handleRetry = () => {
     if (story) {
@@ -70,48 +92,47 @@ export default function EndingScreen() {
             <Text style={styles.heroSubtitle}>{config.subtitle}</Text>
           </View>
 
-          {/* Story name */}
-          {story && (
-            <Text style={styles.storyName}>{story.title}</Text>
-          )}
+          {story && <Text style={styles.storyName}>{story.title}</Text>}
 
           {/* Stats */}
-          {latestCompleted && (
-            <View style={styles.statsRow}>
+          <View style={styles.statsRow}>
+            <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
+              <Text style={[styles.statValue, { color: config.accent }]}>{chaptersRead}</Text>
+              <Text style={styles.statLabel}>Capítulos</Text>
+            </View>
+            <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
+              <Text style={[styles.statValue, { color: config.accent }]}>{wordsEncountered}</Text>
+              <Text style={styles.statLabel}>Palabras</Text>
+            </View>
+            {!isPreQuiz && latestCompleted && (
               <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
-                <Text style={[styles.statValue, { color: config.accent }]}>
-                  {latestCompleted.chaptersRead}
-                </Text>
-                <Text style={styles.statLabel}>Capítulos</Text>
-              </View>
-              <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
-                <Text style={[styles.statValue, { color: config.accent }]}>
-                  {latestCompleted.wordsEncountered}
-                </Text>
-                <Text style={styles.statLabel}>Palabras</Text>
-              </View>
-              <View style={[styles.statCard, { borderColor: config.accent + '44' }]}>
-                <Text style={[styles.statValue, { color: config.accent }]}>
-                  +{latestCompleted.xpEarned}
-                </Text>
+                <Text style={[styles.statValue, { color: config.accent }]}>+{latestCompleted.xpEarned}</Text>
                 <Text style={styles.statLabel}>XP</Text>
               </View>
-            </View>
-          )}
+            )}
+          </View>
 
           {/* Actions */}
           <View style={styles.actions}>
-            {endingType !== 'good' && (
-              <Pressable
-                style={[styles.btn, styles.btnSecondary, { borderColor: config.accent }]}
-                onPress={handleRetry}
-              >
-                <Text style={[styles.btnText, { color: config.accent }]}>Leer otro final</Text>
+            {isPreQuiz ? (
+              <Pressable style={[styles.btn, { backgroundColor: config.accent }]} onPress={handleQuiz}>
+                <Text style={[styles.btnText, { color: Colors.forest }]}>Hacer quiz →</Text>
               </Pressable>
+            ) : (
+              <>
+                {endingType !== 'good' && (
+                  <Pressable
+                    style={[styles.btn, styles.btnSecondary, { borderColor: config.accent }]}
+                    onPress={handleRetry}
+                  >
+                    <Text style={[styles.btnText, { color: config.accent }]}>Leer otro final</Text>
+                  </Pressable>
+                )}
+                <Pressable style={[styles.btn, { backgroundColor: config.accent }]} onPress={handleHome}>
+                  <Text style={[styles.btnText, { color: Colors.forest }]}>Nueva historia</Text>
+                </Pressable>
+              </>
             )}
-            <Pressable style={[styles.btn, { backgroundColor: config.accent }]} onPress={handleHome}>
-              <Text style={[styles.btnText, { color: Colors.forest }]}>Nueva historia</Text>
-            </Pressable>
           </View>
         </ScrollView>
       </SafeAreaView>

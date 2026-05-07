@@ -76,7 +76,7 @@ export default function ChapterScreen() {
 
   const handleContinue = () => {
     if (chapter.ending) {
-      router.push(`/story/${id}/quiz`);
+      router.push(`/story/${id}/ending`);
     } else if (chapter.choices.length > 0) {
       router.push(`/story/${id}/choice`);
     }
@@ -141,7 +141,7 @@ export default function ChapterScreen() {
           {/* CTA */}
           <Pressable style={styles.cta} onPress={handleContinue}>
             <Text style={styles.ctaText}>
-              {chapter.choices.length > 0 ? 'Tomar una decisión →' : chapter.ending ? 'Quiz final →' : 'Continuar →'}
+              {chapter.choices.length > 0 ? 'Tomar una decisión →' : chapter.ending ? 'Ver final →' : 'Continuar →'}
             </Text>
           </Pressable>
         </ScrollView>
