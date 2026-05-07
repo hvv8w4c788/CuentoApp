@@ -42,7 +42,7 @@ const DEFAULT_STATE: AppState = {
   isLoaded: false,
   onboardingDone: false,
   userName: '',
-  selectedLanguage: 'es',
+  selectedLanguage: 'nl',
   userLevel: 'A1',
   learningGoals: [],
   isPro: false,

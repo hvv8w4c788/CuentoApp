@@ -4,12 +4,12 @@ import { useRouter } from 'expo-router';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../src/theme';
 
 const LEVELS = [
-  { code: 'A1', label: 'Principiante', desc: 'Palabras básicas y frases simples', color: '#c8efd0', textColor: '#1a5028', available: true },
-  { code: 'A2', label: 'Elemental', desc: 'Situaciones cotidianas simples', color: '#c0e8f0', textColor: '#0a3a55', available: true },
-  { code: 'B1', label: 'Intermedio', desc: 'Temas familiares y cotidianos', color: '#c8d0f0', textColor: '#1a2060', available: true },
-  { code: 'B2', label: 'Intermedio alto', desc: 'Textos complejos y abstractos', color: '#e0c8f0', textColor: '#3a1060', available: true },
-  { code: 'C1', label: 'Avanzado', desc: 'Contenido exigente y flexible', color: '#f0d8c0', textColor: '#5a2a00', available: false },
-  { code: 'C2', label: 'Maestría', desc: 'Dominio completo del idioma', color: '#f0c8c8', textColor: '#5a0a0a', available: false },
+  { code: 'A1', label: 'Beginner', desc: 'Basic words and simple phrases', color: '#c8efd0', textColor: '#1a5028', available: true },
+  { code: 'A2', label: 'Elementary', desc: 'Everyday situations in Dutch', color: '#c0e8f0', textColor: '#0a3a55', available: true },
+  { code: 'B1', label: 'Intermediate', desc: 'Familiar topics and daily life', color: '#c8d0f0', textColor: '#1a2060', available: false },
+  { code: 'B2', label: 'Upper Intermediate', desc: 'Complex and abstract texts', color: '#e0c8f0', textColor: '#3a1060', available: false },
+  { code: 'C1', label: 'Advanced', desc: 'Demanding and flexible content', color: '#f0d8c0', textColor: '#5a2a00', available: false },
+  { code: 'C2', label: 'Mastery', desc: 'Full command of the language', color: '#f0c8c8', textColor: '#5a0a0a', available: false },
 ];
 
 export default function LevelSelect() {
@@ -23,8 +23,8 @@ export default function LevelSelect() {
           <Pressable onPress={() => router.back()} style={styles.backBtn}>
             <Text style={styles.backText}>←</Text>
           </Pressable>
-          <Text style={styles.title}>¿Cuál es tu nivel?</Text>
-          <Text style={styles.subtitle}>Puedes cambiarlo después en ajustes</Text>
+          <Text style={styles.title}>What is your level?</Text>
+          <Text style={styles.subtitle}>You can change this later in settings</Text>
         </View>
 
         <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
@@ -48,7 +48,7 @@ export default function LevelSelect() {
                     {isSelected && <Text style={styles.check}>✓</Text>}
                     {!level.available && (
                       <View style={styles.soonTag}>
-                        <Text style={styles.soonText}>Pronto</Text>
+                        <Text style={styles.soonText}>Soon</Text>
                       </View>
                     )}
                   </View>
@@ -65,7 +65,7 @@ export default function LevelSelect() {
           onPress={() => selected && router.push(`/goals?level=${selected}`)}
           disabled={!selected}
         >
-          <Text style={styles.ctaText}>Continuar →</Text>
+          <Text style={styles.ctaText}>Continue →</Text>
         </Pressable>
       </SafeAreaView>
     </View>

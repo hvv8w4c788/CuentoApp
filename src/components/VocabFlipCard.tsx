@@ -32,7 +32,7 @@ export function VocabFlipCard({ entry, onRate, darkMode }: Props) {
   };
 
   const speak = () => {
-    Speech.speak(entry.word, { language: 'es-ES', rate: 0.85 });
+    Speech.speak(entry.word, { language: 'nl-NL', rate: 0.85 });
   };
 
   const cardBg = darkMode ? Colors.darkCard : Colors.white;
@@ -48,7 +48,7 @@ export function VocabFlipCard({ entry, onRate, darkMode }: Props) {
           <Pressable onPress={speak} style={styles.speakBtn}>
             <Text style={styles.speakIcon}>🔊</Text>
           </Pressable>
-          <Text style={[styles.tapHint, { color: subColor }]}>Toca para voltear</Text>
+          <Text style={[styles.tapHint, { color: subColor }]}>Tap to flip</Text>
         </Animated.View>
 
         {/* Back */}
@@ -57,7 +57,7 @@ export function VocabFlipCard({ entry, onRate, darkMode }: Props) {
           {entry.example && (
             <Text style={styles.example}>"{entry.example}"</Text>
           )}
-          <Text style={styles.tapHint2}>Toca para volver</Text>
+          <Text style={styles.tapHint2}>Tap to go back</Text>
         </Animated.View>
       </Pressable>
 
@@ -67,13 +67,13 @@ export function VocabFlipCard({ entry, onRate, darkMode }: Props) {
             style={[styles.rateBtn, styles.hardBtn]}
             onPress={() => onRate(entry.word, 'hard')}
           >
-            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>😅 Difícil</Text>
+            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>😅 Hard</Text>
           </Pressable>
           <Pressable
             style={[styles.rateBtn, styles.knownBtn]}
             onPress={() => onRate(entry.word, 'known')}
           >
-            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>✓ Lo sé</Text>
+            <Text style={[styles.rateBtnText, { color: darkMode ? Colors.cream : Colors.ink }]}>✓ I know it</Text>
           </Pressable>
         </View>
       )}

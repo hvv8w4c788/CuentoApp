@@ -25,9 +25,9 @@ export default function VocabScreen() {
         <SafeAreaView style={styles.safe}>
           <View style={styles.empty}>
             <Text style={styles.emptyEmoji}>🃏</Text>
-            <Text style={[styles.emptyTitle, { color: textColor }]}>Sin palabras aún</Text>
+            <Text style={[styles.emptyTitle, { color: textColor }]}>No words yet</Text>
             <Text style={[styles.emptyText, { color: subColor }]}>
-              Lee una historia para añadir palabras a tu mazo.
+              Read a story to add words to your deck.
             </Text>
           </View>
         </SafeAreaView>
@@ -48,9 +48,9 @@ export default function VocabScreen() {
     <View style={[styles.bg, { backgroundColor: bg }]}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
-          <Text style={[styles.title, { color: textColor }]}>Vocabulario</Text>
+          <Text style={[styles.title, { color: textColor }]}>Vocabulary</Text>
           <Text style={[styles.count, { color: subColor }]}>
-            {(index % due.length) + 1} / {due.length} hoy
+            {(index % due.length) + 1} / {due.length} today
           </Text>
         </View>
 

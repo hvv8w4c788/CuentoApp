@@ -14,5 +14,5 @@ export default function Index() {
     );
   }
 
-  return <Redirect href={state.onboardingDone ? '/(tabs)' : '/lang-select'} />;
+  return <Redirect href={state.onboardingDone ? '/(tabs)' : '/level-select'} />;
 }

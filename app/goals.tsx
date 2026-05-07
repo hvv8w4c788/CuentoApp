@@ -5,11 +5,11 @@ import { useApp } from '../src/context/AppContext';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../src/theme';
 
 const GOALS = [
-  { id: 'fun', label: 'Por diversión', emoji: '🎉' },
-  { id: 'travel', label: 'Para viajar', emoji: '✈️' },
-  { id: 'work', label: 'Para trabajar', emoji: '💼' },
-  { id: 'culture', label: 'Aprender cultura', emoji: '🎭' },
-  { id: 'family', label: 'Con mi familia', emoji: '👨‍👩‍👧' },
+  { id: 'fun', label: 'For fun', emoji: '🎉' },
+  { id: 'travel', label: 'For travel', emoji: '✈️' },
+  { id: 'work', label: 'For work', emoji: '💼' },
+  { id: 'culture', label: 'Dutch culture', emoji: '🎭' },
+  { id: 'family', label: 'With family', emoji: '👨‍👩‍👧' },
 ];
 
 export default function Goals() {
@@ -28,7 +28,7 @@ export default function Goals() {
   const handleStart = () => {
     dispatch({
       type: 'SET_ONBOARDING_DONE',
-      userName: name.trim() || 'Estudiante',
+      userName: name.trim() || 'Student',
       level,
       goals: selectedGoals,
     });
@@ -42,12 +42,12 @@ export default function Goals() {
           <Pressable onPress={() => router.back()} style={styles.backBtn}>
             <Text style={styles.backText}>←</Text>
           </Pressable>
-          <Text style={styles.title}>¿Cómo te llamamos?</Text>
+          <Text style={styles.title}>What's your name?</Text>
         </View>
 
         <TextInput
           style={styles.input}
-          placeholder="Tu nombre (opcional)"
+          placeholder="Your name (optional)"
           placeholderTextColor={Colors.tealLight + '88'}
           value={name}
           onChangeText={setName}
@@ -56,8 +56,8 @@ export default function Goals() {
           maxLength={30}
         />
 
-        <Text style={styles.sectionTitle}>¿Por qué aprendes español?</Text>
-        <Text style={styles.sectionSub}>Selecciona todas las que apliquen</Text>
+        <Text style={styles.sectionTitle}>Why are you learning Dutch?</Text>
+        <Text style={styles.sectionSub}>Select all that apply</Text>
 
         <View style={styles.goalsGrid}>
           {GOALS.map(goal => {
@@ -83,7 +83,7 @@ export default function Goals() {
           style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
           onPress={handleStart}
         >
-          <Text style={styles.ctaText}>Empezar a aprender →</Text>
+          <Text style={styles.ctaText}>Start learning →</Text>
         </Pressable>
       </SafeAreaView>
     </View>

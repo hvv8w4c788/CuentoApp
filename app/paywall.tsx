@@ -9,11 +9,11 @@ import { PRODUCT_IDS } from '../src/services/IAPService';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../src/theme';
 
 const FEATURES = [
-  { icon: '📚', text: 'Todas las historias (A1–B2 y futuras)' },
-  { icon: '🔓', text: 'Acceso completo sin límites' },
-  { icon: '🃏', text: 'Mazo de vocabulario ilimitado' },
-  { icon: '🔊', text: 'Pronunciación con voz nativa' },
-  { icon: '🔔', text: 'Recordatorios de racha diaria' },
+  { icon: '📚', text: 'All stories (A1–B2 and future levels)' },
+  { icon: '🔓', text: 'Full access without limits' },
+  { icon: '🃏', text: 'Unlimited vocabulary deck' },
+  { icon: '🔊', text: 'Native pronunciation audio' },
+  { icon: '🔔', text: 'Daily streak reminders' },
 ];
 
 export default function Paywall() {
@@ -37,7 +37,7 @@ export default function Paywall() {
     if (ok) {
       router.back();
     } else {
-      Alert.alert('Sin compras anteriores', 'No encontramos una suscripción activa en tu cuenta.');
+      Alert.alert('No previous purchases', 'We could not find an active subscription on your account.');
     }
   };
 
@@ -53,7 +53,7 @@ export default function Paywall() {
           {/* Hero */}
           <Text style={styles.hero}>📚</Text>
           <Text style={styles.title}>Cuento Pro</Text>
-          <Text style={styles.subtitle}>Aprende español con historias ilimitadas</Text>
+          <Text style={styles.subtitle}>Learn Dutch with unlimited stories</Text>
 
           {/* Features */}
           <View style={styles.features}>
@@ -73,11 +73,11 @@ export default function Paywall() {
               style={[styles.planCard, selected === 'annual' && styles.planCardSelected]}
             >
               <View style={styles.bestValueTag}>
-                <Text style={styles.bestValueText}>Mejor valor</Text>
+                <Text style={styles.bestValueText}>Best value</Text>
               </View>
-              <Text style={styles.planTitle}>Anual</Text>
+              <Text style={styles.planTitle}>Annual</Text>
               <Text style={styles.planPrice}>{annualPrice}</Text>
-              <Text style={styles.planNote}>por año · ahorra ~40%</Text>
+              <Text style={styles.planNote}>per year · save ~40%</Text>
             </Pressable>
 
             {/* Monthly */}
@@ -85,9 +85,9 @@ export default function Paywall() {
               onPress={() => setSelected('monthly')}
               style={[styles.planCard, selected === 'monthly' && styles.planCardSelected]}
             >
-              <Text style={styles.planTitle}>Mensual</Text>
+              <Text style={styles.planTitle}>Monthly</Text>
               <Text style={styles.planPrice}>{monthlyPrice}</Text>
-              <Text style={styles.planNote}>por mes</Text>
+              <Text style={styles.planNote}>per month</Text>
             </Pressable>
           </View>
 
@@ -104,16 +104,16 @@ export default function Paywall() {
             {purchasing ? (
               <ActivityIndicator color={Colors.forest} />
             ) : (
-              <Text style={styles.ctaText}>Suscribirse</Text>
+              <Text style={styles.ctaText}>Subscribe</Text>
             )}
           </Pressable>
 
           <Pressable onPress={handleRestore} style={styles.restoreBtn}>
-            <Text style={styles.restoreText}>Restaurar compras</Text>
+            <Text style={styles.restoreText}>Restore purchases</Text>
           </Pressable>
 
           <Text style={styles.legal}>
-            Se renueva automáticamente. Cancela cuando quieras desde tu cuenta de App Store / Google Play.
+            Renews automatically. Cancel anytime from your App Store / Google Play account.
           </Text>
         </View>
       </SafeAreaView>

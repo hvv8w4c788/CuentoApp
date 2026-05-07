@@ -11,31 +11,26 @@ import { computeStreak } from '../../src/hooks/useStreak';
 import { STORY_REGISTRY } from '../../src/data/registry';
 
 const LEVELS_BY_LANG: Record<string, string[]> = {
-  es: ['Todos', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
-  nl: ['Todos', 'A1', 'A2'],
+  nl: ['All', 'A1', 'A2'],
 };
 
-function getGreeting(name: string, lang: string): string {
+function getGreeting(name: string): string {
   const h = new Date().getHours();
-  if (lang === 'nl') {
-    const time = h < 12 ? 'Goedemorgen' : h < 18 ? 'Goedemiddag' : 'Goedenavond';
-    return `${time}, ${name || 'student'} 👋`;
-  }
-  const time = h < 12 ? 'Buenos días' : h < 20 ? 'Buenas tardes' : 'Buenas noches';
-  return `${time}, ${name || 'estudiante'} 👋`;
+  const time = h < 12 ? 'Goedemorgen' : h < 18 ? 'Goedemiddag' : 'Goedenavond';
+  return `${time}, ${name || 'student'} 👋`;
 }
 
 export default function HomeScreen() {
   const { state, dispatch } = useApp();
   const router = useRouter();
-  const [levelFilter, setLevelFilter] = useState('Todos');
+  const [levelFilter, setLevelFilter] = useState('All');
 
   const streak = computeStreak(state.activityLog);
-  const lang = state.selectedLanguage ?? 'es';
-  const levels = LEVELS_BY_LANG[lang] ?? LEVELS_BY_LANG.es;
+  const lang = state.selectedLanguage ?? 'nl';
+  const levels = LEVELS_BY_LANG[lang] ?? LEVELS_BY_LANG.nl;
 
   const stories = STORY_REGISTRY.filter(
-    s => s.lang === lang && (levelFilter === 'Todos' || s.level === levelFilter)
+    s => s.lang === lang && (levelFilter === 'All' || s.level === levelFilter)
   );
 
   const handleStoryPress = (id: string, free: boolean) => {
@@ -57,7 +52,7 @@ export default function HomeScreen() {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
           <View style={styles.header}>
             <Text style={[styles.greeting, { color: textColor }]}>
-              {getGreeting(state.userName, lang)}
+              {getGreeting(state.userName)}
             </Text>
             <StreakCalendar activityLog={state.activityLog} streak={streak} darkMode={state.darkMode} />
           </View>
