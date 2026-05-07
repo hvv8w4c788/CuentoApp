@@ -1,50 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useApp } from '../src/context/AppContext';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../src/theme';
 
 const LANGUAGES = [
-  { code: 'es', name: 'Español', flag: '🇪🇸', available: true },
-  { code: 'fr', name: 'Français', flag: '🇫🇷', available: false },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹', available: false },
-  { code: 'pt', name: 'Português', flag: '🇧🇷', available: false },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪', available: false },
+  { code: 'es', name: 'Español',    flag: '🇪🇸', available: true },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱', available: true },
+  { code: 'fr', name: 'Français',   flag: '🇫🇷', available: false },
+  { code: 'de', name: 'Deutsch',    flag: '🇩🇪', available: false },
+  { code: 'it', name: 'Italiano',   flag: '🇮🇹', available: false },
 ];
 
 export default function LangSelect() {
   const router = useRouter();
+  const { dispatch } = useApp();
+  const [selected, setSelected] = useState('es');
+
+  const handleContinue = () => {
+    dispatch({ type: 'SET_LANGUAGE', lang: selected });
+    router.push('/level-select');
+  };
+
+  const lang = LANGUAGES.find(l => l.code === selected)!;
 
   return (
     <View style={styles.bg}>
       <SafeAreaView style={styles.safe}>
         <View style={styles.header}>
           <Text style={styles.logo}>Cuento</Text>
-          <Text style={styles.tagline}>Aprende idiomas leyendo historias</Text>
+          <Text style={styles.tagline}>Learn languages by reading stories</Text>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionLabel}>Quiero aprender</Text>
+          <Text style={styles.sectionLabel}>I want to learn</Text>
           <View style={styles.langList}>
-            {LANGUAGES.map(lang => (
+            {LANGUAGES.map(l => (
               <Pressable
-                key={lang.code}
-                onPress={() => lang.available && router.push('/level-select')}
-                style={({ pressed }) => [
+                key={l.code}
+                onPress={() => l.available && setSelected(l.code)}
+                style={[
                   styles.langBtn,
-                  lang.available ? styles.langBtnActive : styles.langBtnDisabled,
-                  pressed && lang.available && { opacity: 0.8 },
+                  l.available ? styles.langBtnActive : styles.langBtnDisabled,
+                  selected === l.code && styles.langBtnSelected,
                 ]}
               >
-                <Text style={styles.flag}>{lang.flag}</Text>
-                <Text style={[styles.langName, !lang.available && { color: Colors.inkFaint }]}>
-                  {lang.name}
+                <Text style={styles.flag}>{l.flag}</Text>
+                <Text style={[styles.langName, !l.available && { color: Colors.inkFaint }]}>
+                  {l.name}
                 </Text>
-                {!lang.available && (
+                {!l.available && (
                   <View style={styles.soonTag}>
-                    <Text style={styles.soonText}>Pronto</Text>
+                    <Text style={styles.soonText}>Soon</Text>
                   </View>
                 )}
-                {lang.available && <Text style={styles.checkmark}>✓</Text>}
+                {selected === l.code && <Text style={styles.checkmark}>✓</Text>}
               </Pressable>
             ))}
           </View>
@@ -52,9 +62,11 @@ export default function LangSelect() {
 
         <Pressable
           style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
-          onPress={() => router.push('/level-select')}
+          onPress={handleContinue}
         >
-          <Text style={styles.ctaText}>Comenzar en Español →</Text>
+          <Text style={styles.ctaText}>
+            Start learning {lang.name} {lang.flag} →
+          </Text>
         </Pressable>
       </SafeAreaView>
     </View>
@@ -97,12 +109,16 @@ const styles = StyleSheet.create({
     ...Shadows.sm,
   },
   langBtnActive: {
+    borderColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(255,255,255,0.05)',
+  },
+  langBtnSelected: {
     borderColor: Colors.amber,
     backgroundColor: 'rgba(232,160,48,0.08)',
   },
   langBtnDisabled: {
-    borderColor: 'rgba(255,255,255,0.08)',
-    backgroundColor: 'rgba(255,255,255,0.03)',
+    borderColor: 'rgba(255,255,255,0.06)',
+    backgroundColor: 'rgba(255,255,255,0.02)',
   },
   flag: { fontSize: 28 },
   langName: {
@@ -117,11 +133,7 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: 6,
   },
-  soonText: {
-    fontFamily: Fonts.sans,
-    fontSize: FontSizes.xs,
-    color: Colors.inkFaint,
-  },
+  soonText: { fontFamily: Fonts.sans, fontSize: FontSizes.xs, color: Colors.inkFaint },
   checkmark: { fontSize: 18, color: Colors.amber },
   cta: {
     backgroundColor: Colors.amber,
@@ -130,9 +142,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...Shadows.md,
   },
-  ctaText: {
-    fontFamily: Fonts.sansBold,
-    fontSize: FontSizes.lg,
-    color: Colors.forest,
-  },
+  ctaText: { fontFamily: Fonts.sansBold, fontSize: FontSizes.lg, color: Colors.forest },
 });

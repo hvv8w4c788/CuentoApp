@@ -65,6 +65,7 @@ type Action =
   | { type: 'LOAD'; payload: AppState }
   | { type: 'MARK_LOADED' }
   | { type: 'SET_ONBOARDING_DONE'; userName: string; level: string; goals: string[] }
+  | { type: 'SET_LANGUAGE'; lang: string }
   | { type: 'SET_LEVEL'; level: string }
   | { type: 'SET_PRO'; value: boolean }
   | { type: 'TOGGLE_DARK_MODE' }
@@ -97,6 +98,9 @@ function reducer(state: AppState, action: Action): AppState {
         learningGoals: action.goals,
         activityLog: [...state.activityLog, todayISO()],
       };
+
+    case 'SET_LANGUAGE':
+      return { ...state, selectedLanguage: action.lang };
 
     case 'SET_LEVEL':
       return { ...state, userLevel: action.level };

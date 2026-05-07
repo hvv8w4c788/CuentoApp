@@ -44,10 +44,17 @@ export interface Story {
 
 export interface StoryRegistryEntry {
   id: string;
+  lang: string;
   level: string;
   free: boolean;
   varName: string | null;
   comingSoon?: boolean;
+  title: string;
+  genre: string;
+  emoji: string;
+  coverColor: string;
+  accentColor: string;
+  description: string;
 }
 
 export interface VocabEntry {
