@@ -11,7 +11,6 @@ import { loadStory } from '../../../src/utils/loadStory';
 import type { VocabEntry } from '../../../src/data/types';
 
 const FONT_SIZE_MAP = { small: 15, medium: 17, large: 20 };
-const XP_PER_CHAPTER = 20;
 
 export default function ChapterScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -29,7 +28,7 @@ export default function ChapterScreen() {
   );
 
   useEffect(() => {
-    if (!story || !chapterId) return;
+    if (!story) return;
     if (!state.currentStoryId || state.currentStoryId !== id) {
       dispatch({ type: 'START_STORY', storyId: id, chapterId: story.startChapter });
     }
@@ -76,13 +75,10 @@ export default function ChapterScreen() {
   chapter.vocab.forEach(v => { vocabMap[v.w.toLowerCase()] = v.d; });
 
   const handleContinue = () => {
-    dispatch({ type: 'ADD_XP', amount: XP_PER_CHAPTER });
     if (chapter.ending) {
       router.push(`/story/${id}/quiz`);
     } else if (chapter.choices.length > 0) {
       router.push(`/story/${id}/choice`);
-    } else {
-      router.push(`/story/${id}/quiz`);
     }
   };
 
@@ -145,7 +141,7 @@ export default function ChapterScreen() {
           {/* CTA */}
           <Pressable style={styles.cta} onPress={handleContinue}>
             <Text style={styles.ctaText}>
-              {chapter.choices.length > 0 ? 'Tomar una decisión →' : 'Continuar →'}
+              {chapter.choices.length > 0 ? 'Tomar una decisión →' : chapter.ending ? 'Quiz final →' : 'Continuar →'}
             </Text>
           </Pressable>
         </ScrollView>

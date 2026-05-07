@@ -21,11 +21,11 @@ export default function Paywall() {
   const { products, loading, purchasing, error, purchase, restore } = useIAP();
   const [selected, setSelected] = useState<'monthly' | 'annual'>('annual');
 
-  const monthlyProduct = products.find(p => p.productId === PRODUCT_IDS.monthly);
-  const annualProduct = products.find(p => p.productId === PRODUCT_IDS.annual);
+  const monthlyProduct = products.find(p => p.productId === PRODUCT_IDS.monthly) as any;
+  const annualProduct = products.find(p => p.productId === PRODUCT_IDS.annual) as any;
 
-  const monthlyPrice = monthlyProduct?.localizedPrice ?? '$6.99';
-  const annualPrice = annualProduct?.localizedPrice ?? '$49.99';
+  const monthlyPrice = monthlyProduct?.localizedPrice ?? monthlyProduct?.price ?? '$6.99';
+  const annualPrice = annualProduct?.localizedPrice ?? annualProduct?.price ?? '$49.99';
 
   const handlePurchase = async () => {
     const id = selected === 'monthly' ? PRODUCT_IDS.monthly : PRODUCT_IDS.annual;

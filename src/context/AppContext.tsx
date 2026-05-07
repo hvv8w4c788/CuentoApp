@@ -6,6 +6,8 @@ import { todayISO } from '../hooks/useStreak';
 const STORAGE_KEY = 'cuento_state_v1';
 
 export interface AppState {
+  isLoaded: boolean;
+
   // Onboarding
   onboardingDone: boolean;
   userName: string;
@@ -37,6 +39,7 @@ export interface AppState {
 }
 
 const DEFAULT_STATE: AppState = {
+  isLoaded: false,
   onboardingDone: false,
   userName: '',
   selectedLanguage: 'es',
@@ -60,6 +63,7 @@ const DEFAULT_STATE: AppState = {
 
 type Action =
   | { type: 'LOAD'; payload: AppState }
+  | { type: 'MARK_LOADED' }
   | { type: 'SET_ONBOARDING_DONE'; userName: string; level: string; goals: string[] }
   | { type: 'SET_LEVEL'; level: string }
   | { type: 'SET_PRO'; value: boolean }
@@ -79,7 +83,10 @@ type Action =
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'LOAD':
-      return action.payload;
+      return { ...action.payload, isLoaded: true };
+
+    case 'MARK_LOADED':
+      return { ...state, isLoaded: true };
 
     case 'SET_ONBOARDING_DONE':
       return {
@@ -218,8 +225,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       if (raw) {
         try {
           dispatch({ type: 'LOAD', payload: JSON.parse(raw) });
+          return;
         } catch {}
       }
+      dispatch({ type: 'MARK_LOADED' });
     });
   }, []);
 

@@ -34,7 +34,7 @@ export default function ChoiceScreen() {
 
   const handleChoice = (choice: Choice) => {
     dispatch({ type: 'ADVANCE_CHAPTER', storyId: id, chapterId: choice.next });
-    router.push(`/story/${id}/quiz`);
+    router.replace(`/story/${id}/chapter`);
   };
 
   return (

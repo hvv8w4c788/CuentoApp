@@ -6,6 +6,7 @@ import { DMSans_400Regular, DMSans_500Medium, DMSans_700Bold } from '@expo-googl
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider, useApp } from '../src/context/AppContext';
+import { IAPProvider } from '../src/context/IAPContext';
 import { View, ActivityIndicator } from 'react-native';
 import { Colors } from '../src/theme';
 
@@ -21,10 +22,7 @@ function AppNavigator() {
         <Stack.Screen name="goals" />
         <Stack.Screen name="paywall" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="story/[id]/chapter" />
-        <Stack.Screen name="story/[id]/choice" />
-        <Stack.Screen name="story/[id]/quiz" />
-        <Stack.Screen name="story/[id]/ending" />
+        <Stack.Screen name="story/[id]" />
       </Stack>
     </>
   );
@@ -52,7 +50,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <AppProvider>
-          <AppNavigator />
+          <IAPProvider>
+            <AppNavigator />
+          </IAPProvider>
         </AppProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

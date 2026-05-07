@@ -4,10 +4,12 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useApp } from '../../../src/context/AppContext';
+import { ProgressBar } from '../../../src/components/ProgressBar';
 import { Colors, Fonts, FontSizes, Spacing, Radii, Shadows } from '../../../src/theme';
 import { loadStory } from '../../../src/utils/loadStory';
 
-const XP_CORRECT = 10;
+const XP_PER_CHAPTER = 20;
+const XP_PER_CORRECT = 10;
 
 export default function QuizScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -15,15 +17,22 @@ export default function QuizScreen() {
   const router = useRouter();
 
   const story = useMemo(() => loadStory(id), [id]);
-  const chapter = useMemo(
-    () => (story && state.currentChapterId ? story.chapters[state.currentChapterId] : null),
-    [story, state.currentChapterId]
-  );
 
+  // Build one question per chapter read, in order
+  const questions = useMemo(() => {
+    if (!story) return [];
+    return state.chapterPath
+      .map(cid => story.chapters[cid])
+      .filter(Boolean)
+      .map(ch => ch.quiz);
+  }, [story, state.chapterPath]);
+
+  const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
 
-  if (!story || !chapter) {
+  if (!story || questions.length === 0) {
     return (
       <View style={styles.bg}>
         <SafeAreaView style={styles.safe}>
@@ -35,9 +44,10 @@ export default function QuizScreen() {
     );
   }
 
-  const { quiz, ending, choices } = chapter;
-  const isCorrect = selected === quiz.a;
-  const isEnding = !!ending;
+  const q = questions[currentQ];
+  const isCorrect = selected !== null && selected === q.a;
+  const isLast = currentQ === questions.length - 1;
+  const progress = (currentQ + (confirmed ? 1 : 0)) / questions.length;
 
   const bg = state.darkMode ? Colors.darkBg : Colors.parchment;
   const textColor = state.darkMode ? Colors.darkText : Colors.ink;
@@ -53,12 +63,15 @@ export default function QuizScreen() {
     if (selected === null || confirmed) return;
     setConfirmed(true);
     if (isCorrect) {
-      dispatch({ type: 'ADD_XP', amount: XP_CORRECT });
+      setCorrectCount(c => c + 1);
     }
   };
 
   const handleNext = () => {
-    if (isEnding) {
+    if (isLast) {
+      const endingChapterId = state.chapterPath[state.chapterPath.length - 1];
+      const endingChapter = story.chapters[endingChapterId];
+      const ending = endingChapter?.ending ?? 'neutral';
       const wordsEncountered = state.chapterPath.reduce((acc, cid) => {
         const ch = story.chapters[cid];
         return acc + (ch?.vocab?.length ?? 0);
@@ -66,24 +79,22 @@ export default function QuizScreen() {
       dispatch({
         type: 'COMPLETE_STORY',
         storyId: id,
-        ending: ending!,
+        ending,
         chaptersRead: state.chapterPath.length,
         wordsEncountered,
-        xpEarned: state.chapterPath.length * 20 + (isCorrect ? XP_CORRECT : 0),
+        xpEarned: state.chapterPath.length * XP_PER_CHAPTER + correctCount * XP_PER_CORRECT,
       });
       router.replace(`/story/${id}/ending`);
-    } else if (choices.length > 0) {
-      router.replace(`/story/${id}/choice`);
     } else {
-      router.replace(`/story/${id}/chapter`);
+      setCurrentQ(i => i + 1);
+      setSelected(null);
+      setConfirmed(false);
     }
   };
 
   const optionStyle = (i: number) => {
-    if (!confirmed) {
-      return selected === i ? styles.optSelected : styles.optDefault;
-    }
-    if (i === quiz.a) return styles.optCorrect;
+    if (!confirmed) return selected === i ? styles.optSelected : styles.optDefault;
+    if (i === q.a) return styles.optCorrect;
     if (i === selected) return styles.optWrong;
     return styles.optDefault;
   };
@@ -96,14 +107,21 @@ export default function QuizScreen() {
             <Text style={[styles.backText, { color: textColor }]}>←</Text>
           </Pressable>
 
-          <Text style={[styles.heading, { color: textColor }]}>Prueba tu comprensión</Text>
+          <View style={styles.header}>
+            <Text style={[styles.heading, { color: textColor }]}>Quiz final</Text>
+            <Text style={[styles.counter, { color: subColor }]}>
+              {currentQ + 1} / {questions.length}
+            </Text>
+          </View>
+
+          <ProgressBar progress={progress} color={Colors.amber} height={4} />
 
           <View style={[styles.card, { backgroundColor: cardBg }, Shadows.sm]}>
-            <Text style={[styles.question, { color: textColor }]}>{quiz.q}</Text>
+            <Text style={[styles.question, { color: textColor }]}>{q.q}</Text>
           </View>
 
           <View style={styles.options}>
-            {quiz.opts.map((opt, i) => (
+            {q.opts.map((opt, i) => (
               <Pressable
                 key={i}
                 onPress={() => handleSelect(i)}
@@ -111,24 +129,22 @@ export default function QuizScreen() {
               >
                 <Text style={[
                   styles.optText,
-                  { color: confirmed && i === quiz.a ? Colors.white : textColor },
+                  { color: confirmed && i === q.a ? Colors.white : textColor },
                 ]}>
                   {opt}
                 </Text>
-                {confirmed && i === quiz.a && (
-                  <Text style={styles.optCheck}>✓</Text>
-                )}
-                {confirmed && i === selected && i !== quiz.a && (
-                  <Text style={styles.optCross}>✗</Text>
-                )}
+                {confirmed && i === q.a && <Text style={styles.optCheck}>✓</Text>}
+                {confirmed && i === selected && i !== q.a && <Text style={styles.optCross}>✗</Text>}
               </Pressable>
             ))}
           </View>
 
           {confirmed && (
-            <View style={[styles.feedback, { backgroundColor: isCorrect ? Colors.good + '22' : Colors.bad + '22' }]}>
+            <View style={[styles.feedback, {
+              backgroundColor: isCorrect ? Colors.good + '22' : Colors.bad + '22',
+            }]}>
               <Text style={[styles.feedbackText, { color: isCorrect ? Colors.good : Colors.bad }]}>
-                {isCorrect ? `¡Correcto! +${XP_CORRECT} XP` : 'Incorrecto — ¡sigue practicando!'}
+                {isCorrect ? `¡Correcto! +${XP_PER_CORRECT} XP` : 'Incorrecto — ¡sigue practicando!'}
               </Text>
             </View>
           )}
@@ -145,7 +161,7 @@ export default function QuizScreen() {
             ) : (
               <Pressable style={styles.btn} onPress={handleNext}>
                 <Text style={styles.btnText}>
-                  {isEnding ? 'Ver final →' : choices.length > 0 ? 'Elegir →' : 'Siguiente →'}
+                  {isLast ? 'Ver final →' : 'Siguiente →'}
                 </Text>
               </Pressable>
             )}
@@ -162,7 +178,9 @@ const styles = StyleSheet.create({
   scroll: { padding: Spacing.xl, gap: Spacing.xl, paddingBottom: 60 },
   backBtn: { padding: Spacing.sm, alignSelf: 'flex-start' },
   backText: { fontSize: FontSizes.xl },
+  header: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' },
   heading: { fontFamily: Fonts.serifBold, fontSize: FontSizes['2xl'] },
+  counter: { fontFamily: Fonts.sansMedium, fontSize: FontSizes.md },
   card: { borderRadius: Radii.lg, padding: Spacing.lg },
   question: { fontFamily: Fonts.sansMedium, fontSize: FontSizes.lg, lineHeight: FontSizes.lg * 1.5 },
   options: { gap: Spacing.sm },

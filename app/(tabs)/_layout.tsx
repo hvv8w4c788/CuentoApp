@@ -7,7 +7,7 @@ export default function TabsLayout() {
   const { state } = useApp();
   return (
     <Tabs
-      tabBar={props => <TabBar {...props} darkMode={state.darkMode} />}
+      tabBar={props => <TabBar {...(props as any)} darkMode={state.darkMode} />}
       screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen name="index" />
