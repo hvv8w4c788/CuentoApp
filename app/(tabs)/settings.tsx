@@ -129,35 +129,7 @@ export default function SettingsScreen() {
           <View style={styles.section}>
             <Text style={[styles.sectionLabel, { color: subColor }]}>ACCOUNT</Text>
             <View style={[styles.card, { backgroundColor: cardBg, borderColor }]}>
-              {!state.isPro && (
-                <>
-                  <Pressable style={styles.row} onPress={() => router.push('/paywall')}>
-                    <View style={styles.rowLeft}>
-                      <Text style={styles.rowIcon}>✨</Text>
-                      <Text style={[styles.rowLabel, { color: Colors.amber }]}>Upgrade to Pro</Text>
-                    </View>
-                    <Text style={[styles.chevron, { color: subColor }]}>›</Text>
-                  </Pressable>
-                  <View style={[styles.divider, { backgroundColor: borderColor }]} />
-                </>
-              )}
-
-              {state.isPro && (
-                <>
-                  <View style={styles.row}>
-                    <View style={styles.rowLeft}>
-                      <Text style={styles.rowIcon}>✨</Text>
-                      <Text style={[styles.rowLabel, { color: textColor }]}>Verhaal Pro</Text>
-                    </View>
-                    <View style={styles.proBadge}>
-                      <Text style={styles.proBadgeText}>ACTIVE</Text>
-                    </View>
-                  </View>
-                  <View style={[styles.divider, { backgroundColor: borderColor }]} />
-                </>
-              )}
-
-                  <Pressable style={styles.row} onPress={handleReset}>
+              <Pressable style={styles.row} onPress={handleReset}>
                 <View style={styles.rowLeft}>
                   <Text style={styles.rowIcon}>🔄</Text>
                   <Text style={[styles.rowLabel, { color: Colors.bad }]}>Reset progress</Text>
@@ -235,11 +207,4 @@ const styles = StyleSheet.create({
   },
   fontSizeBtnActive: { borderColor: Colors.amber, backgroundColor: Colors.amber + '18' },
   fontSizeBtnText: { fontFamily: Fonts.sansBold },
-  proBadge: {
-    backgroundColor: Colors.amber + '22',
-    borderRadius: 6,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-  },
-  proBadgeText: { fontFamily: Fonts.sansBold, fontSize: FontSizes.xs, color: Colors.amber },
 });

@@ -15,9 +15,6 @@ export interface AppState {
   userLevel: string;
   learningGoals: string[];
 
-  // Subscription
-  isPro: boolean;
-
   // Settings
   darkMode: boolean;
   fontSize: FontSize;
@@ -45,7 +42,6 @@ const DEFAULT_STATE: AppState = {
   selectedLanguage: 'nl',
   userLevel: 'A1',
   learningGoals: [],
-  isPro: false,
   darkMode: false,
   fontSize: 'medium',
   showVocab: true,
@@ -67,7 +63,6 @@ type Action =
   | { type: 'SET_ONBOARDING_DONE'; userName: string; level: string; goals: string[] }
   | { type: 'SET_LANGUAGE'; lang: string }
   | { type: 'SET_LEVEL'; level: string }
-  | { type: 'SET_PRO'; value: boolean }
   | { type: 'TOGGLE_DARK_MODE' }
   | { type: 'SET_FONT_SIZE'; value: FontSize }
   | { type: 'TOGGLE_VOCAB' }
@@ -104,9 +99,6 @@ function reducer(state: AppState, action: Action): AppState {
 
     case 'SET_LEVEL':
       return { ...state, userLevel: action.level };
-
-    case 'SET_PRO':
-      return { ...state, isPro: action.value };
 
     case 'TOGGLE_DARK_MODE':
       return { ...state, darkMode: !state.darkMode };

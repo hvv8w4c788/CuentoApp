@@ -7,8 +7,6 @@ import type { Story } from '../data/types';
 
 interface Props {
   story: Story;
-  free: boolean;
-  isPro: boolean;
   progress: number; // 0–1
   completed: boolean;
   comingSoon?: boolean;
@@ -16,8 +14,7 @@ interface Props {
   darkMode?: boolean;
 }
 
-export function StoryCard({ story, free, isPro, progress, completed, comingSoon, onPress, darkMode }: Props) {
-  const locked = !free && !isPro;
+export function StoryCard({ story, progress, completed, comingSoon, onPress, darkMode }: Props) {
   const textColor = darkMode ? Colors.darkText : Colors.ink;
   const subColor = darkMode ? Colors.darkTextFaint : Colors.inkFaint;
   const cardBg = darkMode ? Colors.darkCard : Colors.white;
@@ -35,11 +32,6 @@ export function StoryCard({ story, free, isPro, progress, completed, comingSoon,
       {/* Color cover strip */}
       <View style={[styles.cover, { backgroundColor: story.coverColor }]}>
         <Text style={styles.emoji}>{story.emoji}</Text>
-        {locked && (
-          <View style={styles.lockBadge}>
-            <Text style={styles.lockIcon}>🔒</Text>
-          </View>
-        )}
         {comingSoon && (
           <View style={styles.soonBadge}>
             <Text style={styles.soonText}>Binnenkort</Text>
@@ -86,18 +78,6 @@ const styles = StyleSheet.create({
   emoji: {
     fontSize: 32,
   },
-  lockBadge: {
-    position: 'absolute',
-    bottom: 6,
-    right: 6,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  lockIcon: { fontSize: 10 },
   soonBadge: {
     position: 'absolute',
     bottom: 0,

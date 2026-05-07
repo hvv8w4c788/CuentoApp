@@ -42,11 +42,6 @@ export default function ProfileScreen() {
             <Text style={styles.heroName}>{state.userName || 'Student'}</Text>
             <View style={styles.heroRow}>
               <LevelBadge level={state.userLevel} size="md" />
-              {state.isPro && (
-                <View style={styles.proBadge}>
-                  <Text style={styles.proBadgeText}>PRO ✨</Text>
-                </View>
-              )}
             </View>
             <View style={styles.xpBar}>
               <View style={styles.xpLabels}>
@@ -116,13 +111,6 @@ const styles = StyleSheet.create({
   avatar: { fontSize: 56 },
   heroName: { fontFamily: Fonts.serifBold, fontSize: FontSizes['2xl'], color: Colors.cream },
   heroRow: { flexDirection: 'row', gap: Spacing.sm, alignItems: 'center' },
-  proBadge: {
-    backgroundColor: Colors.amber,
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 8,
-  },
-  proBadgeText: { fontFamily: Fonts.sansBold, fontSize: FontSizes.xs, color: Colors.forest },
   xpBar: { width: '100%', gap: Spacing.xs, marginTop: Spacing.sm },
   xpLabels: { flexDirection: 'row', justifyContent: 'space-between' },
   xpLabel: { fontFamily: Fonts.sans, fontSize: FontSizes.xs, color: Colors.tealLight },

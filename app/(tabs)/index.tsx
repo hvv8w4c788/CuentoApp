@@ -33,11 +33,7 @@ export default function HomeScreen() {
     s => s.lang === lang && (levelFilter === 'All' || s.level === levelFilter)
   );
 
-  const handleStoryPress = (id: string, free: boolean) => {
-    if (!free && !state.isPro) {
-      router.push('/paywall');
-      return;
-    }
+  const handleStoryPress = (id: string) => {
     dispatch({ type: 'LOG_ACTIVITY' });
     router.push(`/story/${id}/chapter`);
   };
@@ -92,12 +88,10 @@ export default function HomeScreen() {
                     chapters: {},
                     startChapter: '',
                   }}
-                  free={entry.free}
-                  isPro={state.isPro}
                   progress={completedChapters / 10}
                   completed={isCompleted}
                   comingSoon={entry.comingSoon ?? false}
-                  onPress={() => handleStoryPress(entry.id, entry.free)}
+                  onPress={() => handleStoryPress(entry.id)}
                   darkMode={state.darkMode}
                 />
               );
